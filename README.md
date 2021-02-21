@@ -3,5 +3,5 @@
 ## introduction
 Welcome to my repository, I have made a lovely website: https://kikihaamke.github.io/challenge-1/
 
-###
+### thanks
 Thanks to my javaScript teacher
