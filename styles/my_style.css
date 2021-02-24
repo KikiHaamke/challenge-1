@@ -15,7 +15,9 @@ body {
 	display: flex;
 	justify-content: center;
 }
-
+h2 {
+	font-size: 32px;
+}
 .container {
 	display: flex;
 
@@ -75,7 +77,16 @@ body {
 	flex-grow: 1;
 	flex-basis: 100%;
 }
-
+.header {
+	margin-bottom: -15px;
+}
+.header .label span {
+	font-size: 12px;
+	margin-bottom: 5px;
+}
+.header img {
+	height: 24px;
+}
 
 @media (max-width: 576px) {
 	.doughnut:not(:last-child), .line:not(:last-child) {
