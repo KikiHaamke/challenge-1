@@ -26,6 +26,7 @@
 						<div class="chart-wrapper">
 							<canvas id="myChart"></canvas>
 						</div>
+						<h4>Cabin Temperature</h4>
 					</div>
 					<div class="box doughnut">Box2</div>
 					<div class="box doughnut">Box3</div>
@@ -49,30 +50,5 @@
 				</div>
 			</div>
 		</div>
-
-
-	<script>
-		var ctx = document.getElementById('myChart').getContext('2d');
-		var chart = new Chart(ctx, {
-			// The type of chart we want to create
-			type: 'line',
-
-			// The data for our dataset
-			data: {
-				labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-				datasets: [{
-					label: 'My First dataset',
-					backgroundColor: 'rgb(255, 99, 132)',
-					borderColor: 'rgb(255, 99, 132)',
-					data: [0, 10, 5, 2, 20, 30, 45]
-				}]
-			},
-
-			// Configuration options go here
-			options: {
-
-			}
-		});
-	</script>
 	</body>
 </html>

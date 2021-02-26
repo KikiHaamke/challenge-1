@@ -18,6 +18,9 @@ body {
 h2 {
 	font-size: 32px;
 }
+h4 {
+	font-size: 24px;
+}
 .container {
 	display: flex;
 
