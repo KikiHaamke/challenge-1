@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", function () {
     createDoughnut('myChart3', '#D5433B', 'mmHg');
     createDoughnut('myChart4', '#5FC19F', 'km/h');
     createMap('collisionChart');
+    createLine('tempLine');
 });
 
 
@@ -129,4 +130,44 @@ function createMap(elementId) {
             }
         }
     });
+}
+
+function createLine (elementId){
+    let data = Array.from({length: 10}, () => Math.floor(Math.random() * (280 - 260) + 260) * -1);
+    console.log(data);
+
+    var ctx = document.getElementById(elementId).getContext('2d');
+    var tempLine = new Chart(ctx, {
+        type: 'line',
+        data: {
+            type: 'line',
+            labels: ['a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a', 'a'],
+            datasets: [{
+                data: data,
+                fill: true,
+                lineTension: 0.25,
+                pointRadius: 3,
+            }]
+        },
+        options: {
+            maintainAspectRatio: false,
+            legend: {
+                display: false
+            },
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        // autoSkip: true,
+                        maxTicksLimit: 3,
+                        // max: -210,
+                        // min: -330,
+                    }
+                }],
+                xAxes: [{
+                    display: false,
+                }]
+            }
+        },
+    });
+
 }
