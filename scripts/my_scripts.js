@@ -1,21 +1,25 @@
-document.addEventListener("DOMContentLoaded", function (){
-    createDoughnut()
+document.addEventListener("DOMContentLoaded", function () {
+    createDoughnut('myChart', '#417EC8', '°C');
+    createDoughnut('myChart2', '#F9D958', 'psia');
+    createDoughnut('myChart3', '#D5433B', 'mmHg');
+    createDoughnut('myChart4', '#5FC19F', 'km/h');
+    createMap('collisionChart');
 });
 
 
-function createDoughnut () {
-    var ctx = document.getElementById('myChart').getContext('2d');
+function createDoughnut(elementId, colorCode, metric) {
+    let data = Array.from({length: 2}, () => Math.floor(Math.random() * (28000 - 0.07) + 0.07));
+    var ctx = document.getElementById(elementId).getContext('2d');
     var chart = new Chart(ctx, {
         // The type of chart we want to create
         type: 'doughnut',
 
         // The data for our dataset
         data: {
-            labels: ['A', 'B'],
             datasets: [{
-                backgroundColor: ['#417EC8', '#A7A9AC'],
+                backgroundColor: [colorCode, '#A7A9AC'],
                 borderWidth: 0,
-                data: [20, 10],
+                data: data,
             }]
         },
 
@@ -33,8 +37,8 @@ function createDoughnut () {
         },
         centerText: {
             display: true,
-            text: '20 km/s',
-            metric: 'km/s',
+            text: data[0] + ' ' + metric,
+            metric: metric,
         },
         plugins: [{
             beforeDraw: function (chart) {
@@ -44,7 +48,7 @@ function createDoughnut () {
     });
 }
 
-function drawTotals(chart){
+function drawTotals(chart) {
     var width = chart.chart.width,
         height = chart.chart.height,
         ctx = chart.chart.ctx;
@@ -61,4 +65,68 @@ function drawTotals(chart){
     ctx.fillText(text, textX, textY);
     ctx.save();
 
+}
+
+function createMap(elementId) {
+    var rocket = new Image();
+    rocket.src = 'images/rocket.png';
+    var rock = new Image();
+    rock.src = 'images/rock.png';
+    var ufo = new Image();
+    ufo.src = 'images/ufo.png';
+
+    var ctx = document.getElementById(elementId).getContext('2d');
+    var myBubbleChart = new Chart(ctx, {
+        type: 'bubble',
+        data: {
+            datasets: [
+                {
+                    data: [{x: 50, y: 50, r: 0}],
+                    pointStyle: rocket,
+                },
+                {
+                    data: Array.from({length: 9}, () => {
+                        return {x: Math.random() * 100, y: Math.random() * 100, r: 0}
+                    }),
+                    pointStyle: rock,
+                },
+                {
+                    data: Array.from({length: 2}, () => {
+                        return {x: Math.random() * 100, y: Math.random() * 100, r: 0}
+                    }),
+                    pointStyle: ufo,
+                },
+            ]
+        },
+        options: {
+            legend: {
+                display: false
+            },
+            tooltips: {
+                enabled: false
+            },
+            scales: {
+                xAxes: [
+                    {
+                        ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            display: false,
+                        },
+                        gridLines: {color: 'white'},
+                    }
+                ],
+                yAxes: [
+                    {
+                        ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: 100,
+                            display: false,
+                        },
+                        gridLines: {color: 'white'},
+                    }
+                ]
+            }
+        }
+    });
 }
