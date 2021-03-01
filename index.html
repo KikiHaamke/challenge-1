@@ -11,11 +11,13 @@
 <body>
 <div class="container">
     <div class="col">
-        <div class="row header">
+        <div class="row">
             <div class="label">
                 <span>Dashboard</span>
-                <h2>Overview</h2>
             </div>
+        </div>
+        <div class="row header">
+            <h2>Overview</h2>
             <img src="images/spacex.svg" alt="logo">
         </div>
         <div class="divider">
@@ -52,11 +54,41 @@
         </div>
         <div class="row">
             <div class="box line">
+                <h4>Outside Temperature (°C)</h4>
                 <div class="chart-wrapper">
                     <canvas id="tempLine"></canvas>
                 </div>
             </div>
-            <div class="box line">Box2</div>
+            <div class="box line">
+               <div class="data-item">
+                   <div class="data-title">Food Supplies</div>
+                   <div class="data-data">
+                       <progress class="data-progress" max="100" value="45"></progress>
+                       <span class="data-value">45%</span>
+                   </div>
+               </div>
+                <div class="data-item">
+                    <div class="data-title">Water Supplies</div>
+                    <div class="data-data">
+                        <progress class="data-progress" max="100" value="68"></progress>
+                        <span class="data-value">68%</span>
+                    </div>
+                </div>
+                <div class="data-item">
+                    <div class="data-title">Distance To Mars</div>
+                    <div class="data-data">
+                        <progress class="data-progress" max="55000000" value="50000000"></progress>
+                        <span class="data-value">5mln km</span>
+                    </div>
+                </div>
+                <div class="data-item">
+                    <div class="data-title">Altitude</div>
+                    <div class="data-data">
+                        <progress class="data-progress" max="100" value="75"></progress>
+                        <span class="data-value">390.0 km</span>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="divider">
             <h3>text</h3>
@@ -68,9 +100,7 @@
                 </div>
             </div>
         </div>
-        <div class="divider">
-            <h3>text</h3>
-        </div>
+        <div class="divider"></div>
     </div>
 </div>
 </body>

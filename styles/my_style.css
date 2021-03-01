@@ -14,7 +14,7 @@ body {
     color: white;
     font-size: 14px;
     line-height: 1.5;
-    padding-top: 15px;
+    padding: 15px 0;
     display: flex;
     justify-content: center;
 }
@@ -76,7 +76,7 @@ h4 {
 
 .box {
     text-align: center;
-    background-color: #30354a;
+    padding: 0 20px;
 }
 
 canvas {
@@ -86,11 +86,12 @@ canvas {
 .doughnut {
     flex: 0 0;
     flex-basis: 100%;
+    padding: 0;
 }
 
 .doughnut .chart-wrapper {
-    width: 75%;
-    margin: 0 auto 15px;
+    width: 100%;
+    margin: 0 auto;
 }
 
 .line {
@@ -98,22 +99,63 @@ canvas {
     flex-basis: 100%;
 }
 
-.header {
-    margin-bottom: -15px;
+.line h4 {
+    margin-bottom: 10px;
 }
 
-.header .label span {
+.line:not(:last-child) {
+    margin-bottom: 30px;
+}
+
+.label span {
     font-size: 12px;
     margin-bottom: 5px;
+}
+
+.header {
+    margin-bottom: -15px;
 }
 
 .header img {
     height: 24px;
 }
 
+.data-item {
+    text-align: left;
+    margin-bottom: 16px;
+}
+.data-title {
+    margin-bottom: 5px;
+}
+.data-data {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.data-progress {
+    border-radius: 6px;
+    height: 5px;
+    flex-grow: 1;
+}
+.data-value {
+    text-align: right;
+    flex-basis: 25%;
+}
+.data-progress::-webkit-progress-bar {
+    background-color: #171923;
+    border-radius: 6px;
+}
+.data-progress::-webkit-progress-value {
+    background-color: #2196f3;
+    border-radius: 6px;
+}
+
 @media (max-width: 576px) {
-    .doughnut:not(:last-child), .line:not(:last-child) {
+    .doughnut:not(:last-child) {
         margin-bottom: 30px;
+    }
+    .doughnut .chart-wrapper {
+        width: 75%;
     }
 }
 
@@ -122,7 +164,7 @@ canvas {
         width: 540px;
     }
 
-    .doughnut, .line {
+    .doughnut {
         flex-basis: 50%;
     }
 
@@ -134,6 +176,9 @@ canvas {
 @media (min-width: 768px) {
     .container {
         width: 720px;
+    }
+    .line {
+        flex-basis: 50%;
     }
 }
 
