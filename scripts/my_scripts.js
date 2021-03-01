@@ -1,17 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
-    createDoughnut('myChart', '#2196f3', '°C', 10, 40);
-    createDoughnut('myChart2', '#F9D958', 'psia', 0, 114);
-    createDoughnut('myChart3', '#D5433B', 'mmHg', 1, 4);
-    createDoughnut('myChart4', '#5FC19F', 'km/s', 0, 10);
+    let doughnut1 = new Chart(document.getElementById('doughnut1').getContext('2d'), createDoughnut('#2196f3', '°C', 10, 40));
+    let doughnut2 = new Chart(document.getElementById('doughnut2').getContext('2d'), createDoughnut('#F9D958', 'psia', 0, 114));
+    let doughnut3 = new Chart(document.getElementById('doughnut3').getContext('2d'), createDoughnut('#D5433B', 'mmHg', 1, 4));
+    let doughnut4 = new Chart(document.getElementById('doughnut4').getContext('2d'), createDoughnut('#5FC19F', 'km/s', 0, 10));
     createMap('collisionChart');
     createLine('tempLine');
 });
 
 
-function createDoughnut(elementId, colorCode, metric, min, max) {
+function createDoughnut(colorCode, metric, min, max) {
     let data = Array.from({length: 2}, () => Math.round((Math.random() * (max - min) + min) * 100) / 100);
-    let ctx = document.getElementById(elementId).getContext('2d');
-    new Chart(ctx, {
+    return {
         type: 'doughnut',
         data: {
             datasets: [{
@@ -42,7 +41,7 @@ function createDoughnut(elementId, colorCode, metric, min, max) {
                 drawTotals(chart);
             }
         }]
-    });
+    }
 }
 
 function drawTotals(chart) {
@@ -89,7 +88,7 @@ function createMap(elementId) {
                     pointStyle: rocket,
                 },
                 {
-                    data: Array.from({length: 9}, () => {
+                    data: Array.from({length: 10}, () => {
                         return {x: Math.random() * 100, y: Math.random() * 100, r: 0}
                     }),
                     pointStyle: rock,
@@ -158,6 +157,9 @@ function createLine(elementId) {
             maintainAspectRatio: false,
             legend: {
                 display: false
+            },
+            tooltips: {
+               enabled: false
             },
             scales: {
                 yAxes: [{
