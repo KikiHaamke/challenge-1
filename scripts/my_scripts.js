@@ -3,12 +3,26 @@ document.addEventListener("DOMContentLoaded", function () {
     let doughnut2 = new Chart(document.getElementById('doughnut2').getContext('2d'), createDoughnut('#F9D958', 'psia', 0, 114));
     let doughnut3 = new Chart(document.getElementById('doughnut3').getContext('2d'), createDoughnut('#D5433B', 'mmHg', 1, 4));
     let doughnut4 = new Chart(document.getElementById('doughnut4').getContext('2d'), createDoughnut('#5FC19F', 'km/s', 0, 10));
-    createMap('collisionChart');
+    let map = new Chart(document.getElementById('collisionChart') , createMap());
     createLine('tempLine');
+
+    // timer interval for updating charts every 3 sec
+    setInterval(function () {
+        updateDoughnuts([doughnut1, doughnut2, doughnut3, doughnut4]);
+        updateMap(map);
+    }, 3000)
 });
 
-
+/***
+ * Function for creating doughnut chart
+ * @param colorCode
+ * @param metric
+ * @param min
+ * @param max
+ * @returns {{centerText: {metric, display: boolean, text: unknown}, data: {datasets: [{backgroundColor: [*, string], borderColor: string, data: unknown[], borderWidth: number}]}, plugins: [{beforeDraw: function(*=): void}], options: {legend: {display: boolean}, cutoutPercentage: number, circumference: number, rotation: number, tooltips: {enabled: boolean}}, type: string}}
+ */
 function createDoughnut(colorCode, metric, min, max) {
+    // create array with random data
     let data = Array.from({length: 2}, () => Math.round((Math.random() * (max - min) + min) * 100) / 100);
     return {
         type: 'doughnut',
@@ -21,6 +35,8 @@ function createDoughnut(colorCode, metric, min, max) {
             }]
         },
         options: {
+            min: min,
+            max: max,
             legend: {
                 display: false
             },
@@ -44,6 +60,10 @@ function createDoughnut(colorCode, metric, min, max) {
     }
 }
 
+/***
+ * Add text to doughnut canvas
+ * @param chart
+ */
 function drawTotals(chart) {
     let width = chart.chart.width,
         height = chart.chart.height,
@@ -70,16 +90,21 @@ function drawTotals(chart) {
     ctx.save();
 }
 
-function createMap(elementId) {
+/***
+ * Function for creating map chart
+ */
+function createMap() {
+    // set images
     var rocket = new Image();
     rocket.src = 'images/rocket.png';
     var rock = new Image();
     rock.src = 'images/rock.png';
     var ufo = new Image();
     ufo.src = 'images/ufo.png';
+    var car = new Image();
+    car.src = 'images/tesla.png';
 
-    var ctx = document.getElementById(elementId).getContext('2d');
-    new Chart(ctx, {
+    return  {
         type: 'bubble',
         data: {
             datasets: [
@@ -89,15 +114,24 @@ function createMap(elementId) {
                 },
                 {
                     data: Array.from({length: 10}, () => {
+                        // random between 0 - 100
                         return {x: Math.random() * 100, y: Math.random() * 100, r: 0}
                     }),
                     pointStyle: rock,
                 },
                 {
                     data: Array.from({length: 2}, () => {
+                        // random between 0 - 100
                         return {x: Math.random() * 100, y: Math.random() * 100, r: 0}
                     }),
                     pointStyle: ufo,
+                },
+                {
+                    data: Array.from({length: 1}, () => {
+                        // random between 0 - 100
+                        return {x: Math.random() * 100, y: Math.random() * 100, r: 0}
+                    }),
+                    pointStyle: car,
                 },
             ]
         },
@@ -131,10 +165,15 @@ function createMap(elementId) {
                 ]
             }
         }
-    });
+    }
 }
 
+/***
+ * Function for creating line chart
+ * @param elementId
+ */
 function createLine(elementId) {
+    // array with random data between 280 - 260
     let data = Array.from({length: 10}, () => Math.floor(Math.random() * (280 - 260) + 260) * -1);
 
     var ctx = document.getElementById(elementId).getContext('2d');
@@ -178,4 +217,32 @@ function createLine(elementId) {
             }
         },
     });
+}
+
+/***
+ * Create new data for doughnut charts
+ * @param charts
+ */
+function updateDoughnuts(charts) {
+    // loop through each doughnut chart
+    for (let i = 0; i < charts.length; i++) {
+        let chart = charts[i];
+        // set new random data
+        chart.data.datasets[0].data = Array.from({length: 2}, () => Math.round((Math.random() * (chart.config.options.max - chart.config.options.min) + chart.config.options.min) * 100) / 100);
+        // set text for canvas
+        chart.config.centerText.text = chart.data.datasets[0].data[0];
+        chart.update();
+    }
+}
+
+/***
+ * Create new data for map chart
+ * @param chart
+ */
+function updateMap(chart) {
+    chart.data.datasets[1].data = Array.from({length: 10}, () => { return {x: Math.random() * 100, y: Math.random() * 100, r: 0}});
+    chart.data.datasets[2].data = Array.from({length: 2}, () => { return {x: Math.random() * 100, y: Math.random() * 100, r: 0}});
+    chart.data.datasets[3].data = Array.from({length: 1}, () => { return {x: Math.random() * 100, y: Math.random() * 100, r: 0}});
+    // update without animation
+    chart.update(0);
 }
